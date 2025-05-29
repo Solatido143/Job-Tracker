@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Resume;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -16,7 +17,8 @@ class ApplicationController extends Controller
 
     public function create()
     {
-        return view('applications.create'); 
+        $resumes = Resume::all();
+        return view('applications.create', compact('resumes')); 
     }
 
     public function filterByStatus($status)

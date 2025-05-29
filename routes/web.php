@@ -23,6 +23,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Resumé Upload
 Route::get('/resume/upload', [ResumeController::class, 'uploadForm'])->name('resume.upload');
+Route::post('resume/upload', [ResumeController::class, 'store'])->name('resume.store');
 
 // Profile Settings
 Route::get('/profile/settings', [UserController::class, 'settings'])->name('profile.settings');

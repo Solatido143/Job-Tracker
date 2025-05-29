@@ -3,23 +3,41 @@
 @section('title', 'Upload Resume')
 
 @section('content')
-    <div class="max-w-xl mx-auto p-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">📄 Upload Resume</h1>
+    <div class="max-w-lg mx-auto p-8 bg-white rounded shadow mt-10">
+        <h1 class="text-2xl font-bold mb-6">Upload Your Resume</h1>
 
-        {{-- {{ route('resume.store') }} --}}
-        <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
+        @if ($errors->any())
+            <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form id="resumeUploadForm" action="{{ route('resume.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
             <div>
-                <label for="resume" class="block text-sm font-medium text-gray-700">Select Resume (PDF/DOCX)</label>
-                <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" class="p-2 mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <label for="resume" class="block mb-2 font-medium text-gray-700">Choose Resume (PDF, DOC, DOCX)</label>
+                <input type="file" name="resume" id="resume" class="block w-full p-2 border border-gray-300 rounded"
+                    required>
             </div>
 
-            <div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition">
-                    Upload Resume
-                </button>
-            </div>
+            <button id="submitBtn" type="submit"
+                class="mt-6 w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition">
+                Upload Resume
+            </button>
         </form>
+
+        <script>
+            const form = document.getElementById('resumeUploadForm');
+            const submitBtn = document.getElementById('submitBtn');
+            form.addEventListener('submit', () => {
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Uploading...';
+            });
+        </script>
+
     </div>
 @endsection
