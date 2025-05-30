@@ -10,17 +10,17 @@
             <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
                 <ul>
                     @foreach ($errors->all() as $error)
-                        <li>• {{ $error }}</li>
+                        <li>{{ count($errors->all()) > 1 ? '• ' : '' }}{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
 
-        <form id="resumeUploadForm" action="{{ route('resume.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="resumeUploadForm" action="{{ route('resume.uploadFile') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div>
                 <label for="resume" class="block mb-2 font-medium text-gray-700">Choose Resume (PDF, DOC, DOCX)</label>
-                <input type="file" name="resume" id="resume" class="block w-full p-2 border border-gray-300 rounded"
+                <input type="file" name="resume" id="resume" class="block w-full p-2 border bg-gray-100 border-gray-300 rounded"
                     required>
             </div>
 
