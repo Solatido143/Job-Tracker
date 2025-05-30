@@ -16,6 +16,6 @@ class Resume extends Model
     ];
 
     public function JobApplications() {
-        return $this->hasMany(JobApplication::class);
+        return $this->hasMany(Application::class);
     }
 }
