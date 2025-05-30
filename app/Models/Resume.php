@@ -15,7 +15,7 @@ class Resume extends Model
         'file_path',
     ];
 
-    public function JobApplications() {
+    public function Applications() {
         return $this->hasMany(Application::class);
     }
 }
