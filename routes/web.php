@@ -22,8 +22,8 @@ Route::get('/applications/status/{status}', [ApplicationController::class, 'filt
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Resumé Upload
-Route::get('/resume/upload', [ResumeController::class, 'uploadForm'])->name('resume.upload');
-Route::post('resume/upload', [ResumeController::class, 'store'])->name('resume.store');
+Route::get('/resume/upload', [ResumeController::class, 'view'])->name('resume.upload');
+Route::post('/resume/upload', [ResumeController::class, 'uploadForm'])->name('resume.uploadFile');
 
 // Profile Settings
 Route::get('/profile/settings', [UserController::class, 'settings'])->name('profile.settings');

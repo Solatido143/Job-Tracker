@@ -8,18 +8,23 @@ use Illuminate\Http\Request;
 class ResumeController extends Controller
 {
     //
-    public function uploadForm()
+    public function view()
     {
         return view('resume.upload');
     }
 
-    public function store(Request $request)
+    public function uploadForm(Request $request)
     {
         $request->validate([
             'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
         $file = $request->file('resume');
+        $originalName = $file->getClientOriginalName();
+
+        if(Resume::where('original_name', $originalName)->exists()) {
+            return back()->withErrors(['resume' => 'A resume with this name already exist.']);
+        }
 
         // Save the file somewhere, e.g. 'resumes' folder in storage/app/public
         $path = $file->store('resumes', 'public');
