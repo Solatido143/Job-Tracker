@@ -5,17 +5,16 @@ use App\Http\Controllers\{
     ApplicationController,
     DashboardController,
     ResumeController,
-    UserController
+    UserController,
+    SiteController
 };
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SiteController::class, 'actionIndex']);
 
 // Job Applications
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
-Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
-Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+Route::get('/applications/form', [ApplicationController::class, 'viewForm'])->name('applications.create');
+Route::post('/applications', [ApplicationController::class, 'createApplication'])->name('applications.createApplication');
 Route::get('/applications/status/{status}', [ApplicationController::class, 'filterByStatus'])->name('applications.status');
 
 // Dashboards
