@@ -6,10 +6,19 @@
     <div class="max-w-2xl mx-auto p-8 rounded bg-[#]">
 
         @if (session('success'))
-        <div class="fixed top-4 left-4 z-50 p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 shadow-lg">
-            <span class="font-medium">Success!</span> {{ session('success') }}
-        </div>
+            <div 
+                x-data="{ show: true }" 
+                x-init="setTimeout(() => show = false, 3000)" 
+                x-show="show"
+                x-transition:leave="transition ease-in duration-500"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                
+                class="fixed top-4 left-4 z-50 p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 shadow-lg">
+                <span class="font-medium">Success!</span> {{ session('success') }}
+            </div>
         @endif
+
 
         <h1 class="text-3xl font-bold text-gray-800 mb-6">➕ Add New Job Application</h1>
 
