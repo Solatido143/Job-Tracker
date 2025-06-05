@@ -13,7 +13,8 @@ class ApplicationController extends Controller
 
     public function index()
     {
-        return view('applications.index');
+        $job_applications = Application::with('resume')->get();
+        return view('applications.index', compact('job_applications'));
     }
 
     public function viewForm()

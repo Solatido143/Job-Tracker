@@ -29,7 +29,7 @@
                 <label for="job_title" class="block text-sm font-medium text-gray-700">Job Title</label>
                 <input type="text" name="job_title" id="job_title"
                     class="p-2 mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g. Frontend Developer">
+                    placeholder="e.g. Frontend Developer" required>
             </div>
 
             <!-- Company -->
@@ -37,14 +37,14 @@
                 <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
                 <input type="text" name="company" id="company"
                     class="p-2 mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g. Tech Corp">
+                    placeholder="e.g. Tech Corp" required>
             </div>
 
             <!-- Status -->
             <div>
                 <label for="status" class="block text-sm font-medium text-gray-700">Application Status</label>
                 <select name="status" id="status"
-                    class="p-2 mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    class="p-2 mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
                     <option value="applied">Applied</option>
                     <option value="interviewing">Interview</option>
                     <option value="interviewing">Offered</option>
@@ -57,7 +57,7 @@
             <div>
                 <label for="applied_at" class="block text-sm font-medium text-gray-700">Date Applied</label>
                 <input type="date" name="applied_at" id="applied_at"
-                    class="p-2 mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    class="p-2 mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
             </div>
 
             <!-- Notes -->

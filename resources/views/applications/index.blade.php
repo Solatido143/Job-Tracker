@@ -26,21 +26,43 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     {{-- Loop through job applications here --}}
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Frontend Developer</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Tech Corp</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <span
-                                class="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">Applied</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 15, 2025</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 underline cursor-pointer">
-                            <a href="#">frontend_dev_resume.pdf</a>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <a href="#" class="text-blue-600 hover:underline">View</a>
-                        </td>
-                    </tr>
+                    @forelse ($job_applications as $job_application)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $job_application->job_title }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $job_application->company }}
+                            </td>
+                            @php
+                                $statusColors = [
+                                    'applied' => 'bg-blue-100 text-blue-700',
+                                    'interviewing' => 'bg-yellow-100 text-yellow-700',
+                                    'offered' => 'bg-green-100 text-green-700',
+                                    'rejected' => 'bg-red-100 text-red-700',
+                                    'hired' => 'bg-emerald-100 text-emerald-700',
+                                ];
+                            @endphp
+
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span
+                                    class="inline-block px-2 py-1 rounded-full text-xs {{ $statusColors[$job_application->status] ?? 'bg-gray-100 text-gray-700' }}">
+                                    {{ ucfirst($job_application->status) }}
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $job_application->applied_at->format('F j, Y') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 underline cursor-pointer">
+                                <a href="#">{{ $job_application->resume?->original_name ?? 'No resume selected' }}</a>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <a href="#" class="text-blue-600 hover:underline">View</a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td>You currently don't have a job applications. Apply now!</td>
+                        </tr>
+                    @endforelse
                     {{-- More rows --}}
                 </tbody>
             </table>
