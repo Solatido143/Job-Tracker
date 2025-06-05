@@ -8,12 +8,16 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    //
-    // ApplicationController.php
-
-    public function index()
+    public function index(Request $request)
     {
-        $job_applications = Application::with('resume')->get();
+        $query = Application::query();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $job_applications = $query->get();
+
         return view('applications.index', compact('job_applications'));
     }
 
@@ -50,11 +54,5 @@ class ApplicationController extends Controller
 
         return redirect()->route('applications.index')->with('success', 'Job application added successfully.');
     }
-
-
-    public function filterByStatus($status)
-    {
-        return view('applications.status', compact('status'));
-    }
-
+    
 }

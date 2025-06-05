@@ -15,7 +15,6 @@ Route::get('/', [SiteController::class, 'actionIndex']);
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
 Route::get('/applications/form', [ApplicationController::class, 'viewForm'])->name('applications.create');
 Route::post('/applications', [ApplicationController::class, 'createApplication'])->name('applications.createApplication');
-Route::get('/applications/status/{status}', [ApplicationController::class, 'filterByStatus'])->name('applications.status');
 
 // Dashboards
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

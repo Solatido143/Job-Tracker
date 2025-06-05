@@ -4,13 +4,31 @@
 
 @section('content')
     <div class="p-8">
-        <div class="flex items-center justify-between mb-4">
+        <div class="sm:flex items-center justify-between mb-4">
             <h1 class="text-3xl font-bold text-gray-800">Job Applications</h1>
-            <a href="{{ route('applications.create') }}"
-                class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition">
-                + Add New
-            </a>
+
+            <div class="flex gap-4 mt-2 sm:mt-0">
+                <!-- Filter Dropdown -->
+                <select id="statusFilter"
+                    class="border border-gray-300 text-sm text-gray-700 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    onchange="location = '{{ route('applications.index') }}?status=' + this.value;">
+                    <option value="" {{ request('status') == '' ? 'selected' : '' }}>All</option>
+                    <option value="applied" {{ request('status') == 'applied' ? 'selected' : '' }}>Applied</option>
+                    <option value="interviewing" {{ request('status') == 'interviewing' ? 'selected' : '' }}>Interviewing
+                    </option>
+                    <option value="offered" {{ request('status') == 'offered' ? 'selected' : '' }}>Offered</option>
+                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                    <option value="hired" {{ request('status') == 'hired' ? 'selected' : '' }}>Hired</option>
+                </select>
+
+                <!-- Add Button -->
+                <a href="{{ route('applications.create') }}"
+                    class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition">
+                    + Add New
+                </a>
+            </div>
         </div>
+
 
         <div class="overflow-x-auto bg-white shadow rounded-lg">
             <table class="min-w-full divide-y divide-gray-200">
@@ -51,8 +69,12 @@
 
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $job_application->applied_at->format('F j, Y') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 underline cursor-pointer">
-                                <a href="#">{{ $job_application->resume?->original_name ?? 'No resume selected' }}</a>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 cursor-pointer">
+                                @if ($job_application->resume)
+                                    <a href="#" class="underline">{{ $job_application->resume?->original_name }}</a>
+                                @else
+                                    <span class="text-gray-500 italic">No resume selected</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <a href="#" class="text-blue-600 hover:underline">View</a>
@@ -60,7 +82,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td>You currently don't have a job applications. Apply now!</td>
+                            <td class="px-6 py-4 text-sm">You currently don't have a job applications. Apply now!</td>
                         </tr>
                     @endforelse
                     {{-- More rows --}}
