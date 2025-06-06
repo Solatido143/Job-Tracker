@@ -22,8 +22,8 @@ class ResumeController extends Controller
         $file = $request->file('resume');
         $originalName = $file->getClientOriginalName();
 
-        if(Resume::where('original_name', $originalName)->exists()) {
-            return back()->withErrors(['resume' => 'A resume with this name already exist.']);
+        if(Resume::where('original_name', $originalName)->exists() && !$request->has('overwrite')) {
+            return back()->withErrors(['resume_exist' => 'This file already exist.']);
         }
 
         // Save the file somewhere, e.g. 'resumes' folder in storage/app/public

@@ -24,7 +24,7 @@
                 </a>
 
                 <!-- Filter by Status -->
-                <a href="{{ route('applications.status', ['status' => 'applied']) }}" class="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
+                <a href="{{ route('applications.index') }}?status=applied" class="block p-6 bg-white rounded-lg shadow hover:shadow-md transition">
                     <h2 class="text-xl font-semibold text-gray-800">📌 Filter by Status</h2>
                     <p class="mt-2 text-gray-600">Quickly see which jobs are Applied, Interviewing, Rejected, or Hired.</p>
                 </a>

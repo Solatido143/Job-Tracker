@@ -6,10 +6,13 @@ use App\Http\Controllers\{
     DashboardController,
     ResumeController,
     UserController,
-    SiteController
+    SiteController,
+    ApiController
 };
 
 Route::get('/', [SiteController::class, 'actionIndex']);
+
+Route::get('/check-resume', [ApiController::class, 'checkResume']);
 
 // Job Applications
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
