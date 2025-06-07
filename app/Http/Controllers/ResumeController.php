@@ -22,18 +22,32 @@ class ResumeController extends Controller
         $file = $request->file('resume');
         $originalName = $file->getClientOriginalName();
 
-        if(Resume::where('original_name', $originalName)->exists() && !$request->has('overwrite')) {
-            return back()->withErrors(['resume_exist' => 'This file already exist.']);
+        // Check if resume exists in DB
+        $existingResume = Resume::where('original_name', $originalName)->first();
+
+        if ($existingResume && !$request->has('overwrite')) {
+            return back()->withErrors(['resume_exist' => 'This file already exists.']);
         }
 
-        // Save the file somewhere, e.g. 'resumes' folder in storage/app/public
         $path = $file->store('resumes', 'public');
 
-        // Save info in database
-        $resume = new Resume();
-        $resume->original_name = $file->getClientOriginalName(); // this is the original file name
-        $resume->file_path = $path; // assuming you have a column for the stored path
-        $resume->save();
+        if ($existingResume) {
+            // Overwrite logic: delete old local file
+            if (\Storage::disk('public')->exists($existingResume->file_path)) {
+                \Storage::disk('public')->delete($existingResume->file_path);
+            }
+
+            // Update database record
+            $existingResume->file_path = $path;
+            $existingResume->updated_at = now(); // update timestamp
+            $existingResume->save();
+        } else {
+            // Insert new resume into DB
+            $resume = new Resume();
+            $resume->original_name = $originalName;
+            $resume->file_path = $path;
+            $resume->save();
+        }
 
         return redirect()->route('applications.create')->with('success', 'Resume uploaded successfully.');
     }
