@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
     public function checkResume(Request $request) {
-        $filename = $request->query('original_name');
+        $filename = $request->query('name');
 
         if (!$filename) {
             return response()->json(['error' => 'Filename is required'], 400);
